@@ -1,0 +1,11 @@
+{
+  "name": "happy-diwali-surprise",
+  "version": "1.0.0",
+  "description": "Interactive Diwali surprise celebration site with skyshots, fireworks, and glowing diyas",
+  "scripts": {
+    "deploy": "npx vercel --prod"
+  },
+  "keywords": ["diwali", "fireworks", "celebration", "greeting"],
+  "author": "",
+  "license": "MIT"
+}
