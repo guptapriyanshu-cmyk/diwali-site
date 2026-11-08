@@ -1,0 +1,912 @@
+/* ==========================================================================
+   Happy Diwali - Responsive Interactive Celebration Stylesheet
+   Crafted for Mobile, Tablet, and Desktop (Phone & Laptop)
+   ========================================================================== */
+
+:root {
+  --bg-gradient: radial-gradient(circle at 50% 20%, #1c0a35 0%, #0c051a 60%, #05020c 100%);
+  --gold-primary: #ffd700;
+  --gold-light: #fff59d;
+  --gold-dark: #b8860b;
+  --amber: #ff9100;
+  --crimson: #ff1744;
+  --text-main: #fffdf5;
+  --text-muted: #e2d9f3;
+  --card-bg: rgba(22, 10, 42, 0.72);
+  --card-border: rgba(255, 215, 0, 0.35);
+  --glow-gold: 0 0 25px rgba(255, 215, 0, 0.45);
+  --glow-intense: 0 0 45px rgba(255, 179, 0, 0.75);
+  --font-serif: 'Cinzel Decorative', 'Cinzel', 'Georgia', serif;
+  --font-sans: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-script: 'Great Vibes', 'Brush Script MT', cursive;
+  --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: #080314;
+  background-image: var(--bg-gradient);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Background Twinkling Stars */
+.star-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 120px 80px, #ffdf80, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 220px 180px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 340px 90px, #ffbf00, rgba(0,0,0,0)),
+    radial-gradient(1.2px 1.2px at 480px 240px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 620px 140px, #ffdf80, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 780px 70px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 900px 220px, #ffd700, rgba(0,0,0,0));
+  background-repeat: repeat;
+  background-size: 550px 350px;
+  opacity: 0.55;
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+@keyframes starTwinkle {
+  0% { opacity: 0.35; }
+  100% { opacity: 0.75; }
+}
+
+/* Sky Canvas */
+#fireworksCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: auto; /* Allow users to click anywhere on the sky to launch fireworks */
+  cursor: crosshair;
+}
+
+/* Fullscreen Sky Flash Effect */
+.sky-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 25%, rgba(255, 230, 150, 0.5) 0%, rgba(255, 120, 0, 0.2) 40%, transparent 80%);
+  opacity: 0;
+  transition: opacity 0.08s ease-out;
+}
+.sky-flash.active {
+  opacity: 1;
+}
+
+/* Hanging Toran / Traditional Lanterns (Kandils) */
+.festive-garland {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 4;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+}
+
+.kandil {
+  width: 50px;
+  height: 85px;
+  filter: drop-shadow(0 6px 12px rgba(255, 145, 0, 0.5));
+  transform-origin: top center;
+  animation: swayLantern 3.8s ease-in-out infinite alternate;
+}
+.kandil.right {
+  animation-delay: -1.9s;
+}
+
+@keyframes swayLantern {
+  0% { transform: rotate(-5deg); }
+  100% { transform: rotate(5deg); }
+}
+
+/* ==========================================================================
+   Main Application Stage & Views
+   ========================================================================== */
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 16px 92px 16px;
+  z-index: 5;
+  pointer-events: none; /* Child interactive elements re-enable pointer-events */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* View 1: Surprise Trigger Screen */
+.surprise-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: auto;
+  max-width: 580px;
+  width: 100%;
+  transition: opacity 0.35s var(--transition-smooth), transform 0.35s var(--transition-smooth);
+}
+
+.surprise-stage.fading {
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+}
+
+.surprise-stage.hidden {
+  display: none;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Ambient Pulse Rings behind button */
+.pulse-rings {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.35);
+  box-shadow: 0 0 25px rgba(255, 180, 0, 0.3);
+  animation: pulseRing 3.5s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+.ring:nth-child(1) { width: 140px; height: 140px; animation-delay: 0s; }
+.ring:nth-child(2) { width: 220px; height: 220px; animation-delay: 1.1s; }
+.ring:nth-child(3) { width: 300px; height: 300px; animation-delay: 2.2s; }
+
+@keyframes pulseRing {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* The Grand Surprise Button */
+.surprise-button {
+  position: relative;
+  background: linear-gradient(145deg, #32125a 0%, #1f0b3b 60%, #15062a 100%);
+  border: 2px solid #ffd700;
+  border-radius: 28px;
+  padding: 30px 36px 26px 36px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.6),
+    0 0 35px rgba(255, 215, 0, 0.4),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 -2px 10px rgba(0, 0, 0, 0.5);
+  transform: translateY(0);
+  transition: transform 0.3s var(--transition-smooth), box-shadow 0.3s var(--transition-smooth), border-color 0.3s ease;
+  animation: floatButton 3.6s ease-in-out infinite;
+  outline: none;
+}
+
+.surprise-button:hover,
+.surprise-button:focus-visible {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow:
+    0 22px 50px rgba(0, 0, 0, 0.7),
+    0 0 55px rgba(255, 215, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  border-color: #fff275;
+}
+
+.surprise-button:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+@keyframes floatButton {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Centerpiece Glowing Diya */
+.diya-container {
+  position: relative;
+  width: 90px;
+  height: 65px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diya-flame-wrapper {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 40px;
+}
+
+.flame {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 34px;
+  background: radial-gradient(ellipse at bottom, #ffffff 10%, #ffe600 35%, #ff5722 80%, rgba(255, 87, 34, 0) 100%);
+  border-radius: 50% 50% 35% 35% / 70% 70% 30% 30%;
+  box-shadow:
+    0 0 20px #ffb300,
+    0 0 35px #ff5722;
+  transform-origin: bottom center;
+  animation: flickerFlame 1.8s ease-in-out infinite alternate;
+}
+
+.flame-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 200, 0, 0.4) 0%, rgba(255, 87, 34, 0) 70%);
+  pointer-events: none;
+  animation: flameHalo 1.8s ease-in-out infinite alternate;
+}
+
+@keyframes flickerFlame {
+  0% { transform: translateX(-50%) rotate(-2deg) scale(1); }
+  25% { transform: translateX(-50%) rotate(3deg) scale(1.05, 0.95); }
+  50% { transform: translateX(-50%) rotate(-1deg) scale(0.96, 1.04); }
+  75% { transform: translateX(-50%) rotate(2deg) scale(1.02); }
+  100% { transform: translateX(-50%) rotate(-3deg) scale(0.98, 1.02); }
+}
+
+@keyframes flameHalo {
+  0% { transform: translate(-50%, -50%) scale(0.9); opacity: 0.7; }
+  100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+.diya-base-svg {
+  width: 85px;
+  height: 48px;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.5));
+}
+
+/* Button Text Styling */
+.surprise-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.surprise-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 4.4vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff9e6;
+  text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  line-height: 1.3;
+}
+
+.sparkle-icon {
+  font-size: 1.1em;
+  color: #ffd700;
+  animation: sparkleTwirl 2s infinite linear;
+}
+
+@keyframes sparkleTwirl {
+  0% { transform: rotate(0deg) scale(0.9); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(0.9); }
+}
+
+.surprise-subtext {
+  font-size: clamp(0.85rem, 2.8vw, 0.95rem);
+  color: var(--gold-light);
+  opacity: 0.9;
+  letter-spacing: 0.3px;
+}
+
+/* ==========================================================================
+   View 2: Happy Diwali Revealed Celebration Card
+   ========================================================================== */
+.celebration-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 760px;
+  width: 100%;
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(35px) scale(0.92);
+  transition: opacity 1s var(--transition-smooth), transform 1s var(--transition-smooth);
+}
+
+.celebration-stage.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.celebration-stage.hidden {
+  display: none;
+}
+
+/* Grand Greeting Glassmorphism Card */
+.greeting-card {
+  position: relative;
+  width: 100%;
+  background: var(--card-bg);
+  border: 1.5px solid var(--card-border);
+  border-radius: 28px;
+  padding: clamp(22px, 5vw, 44px) clamp(18px, 4.5vw, 42px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.7),
+    0 0 45px rgba(255, 190, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Traditional Rangoli Watermark Accent */
+.rangoli-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(460px, 90vw);
+  height: min(460px, 90vw);
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+  animation: slowSpin 60s linear infinite;
+}
+
+@keyframes slowSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(8px, 1.8vw, 14px);
+}
+
+/* Festive Top Badge */
+.festive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: clamp(0.72rem, 2vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.12), rgba(255, 145, 0, 0.25), rgba(255, 215, 0, 0.12));
+  padding: 5px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+/* Grand "Happy Diwali" Shimmering Title */
+.diwali-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 6.5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #ffffff 0%, #fff6bd 20%, #ffd700 45%, #ff9100 75%, #ffffff 100%);
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShimmer 5s linear infinite;
+  filter: drop-shadow(0 4px 18px rgba(255, 180, 0, 0.65));
+}
+
+@keyframes textShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 250% center; }
+}
+
+/* Recipient Personalization Tag */
+.recipient-greeting {
+  font-family: var(--font-script);
+  font-size: clamp(1.3rem, 3.8vw, 1.9rem);
+  color: #ffca28;
+  text-shadow: 0 0 12px rgba(255, 193, 7, 0.6);
+  min-height: 1.3em;
+  display: none;
+}
+.recipient-greeting.visible {
+  display: block;
+}
+
+/* Ornate Rangoli Divider */
+.ornate-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 380px;
+  gap: 12px;
+  opacity: 0.85;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+}
+
+.divider-symbol {
+  font-size: 1.15rem;
+  color: var(--gold-primary);
+  filter: drop-shadow(0 0 8px var(--gold-primary));
+}
+
+/* Auspicious Wishes Paragraph */
+.wishes-text {
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 580px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+}
+
+.wishes-text strong {
+  color: var(--gold-light);
+  font-weight: 500;
+}
+
+/* Flanking Brass Diyas */
+.diyas-row {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  padding-top: 2px;
+}
+
+.side-diya {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding-top: 18px;
+  transition: transform 0.25s ease;
+}
+.side-diya:hover {
+  transform: scale(1.08);
+}
+
+.side-diya .diya-flame-wrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 28px;
+}
+
+.side-diya .flame {
+  width: 14px;
+  height: 22px;
+}
+
+.side-diya .flame-glow {
+  width: 42px;
+  height: 42px;
+}
+
+.diya-caption {
+  font-size: 0.72rem;
+  letter-spacing: 0.5px;
+  color: var(--gold-light);
+  opacity: 0.75;
+  margin-top: 3px;
+}
+
+/* Interactive Sky Tap Prompt */
+.tap-sky-hint {
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  color: rgba(255, 230, 160, 0.85);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  background: rgba(255, 215, 0, 0.08);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 215, 0, 0.35);
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   Bottom Action Toolbar (Responsive for Phone & Laptop)
+   ========================================================================== */
+.bottom-controls {
+  position: fixed;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(18, 8, 36, 0.85);
+  padding: 8px 14px;
+  border-radius: 40px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 215, 0, 0.2);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  transition: opacity 0.5s var(--transition-smooth), transform 0.5s var(--transition-smooth);
+}
+
+.bottom-controls.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.control-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+.control-btn:hover {
+  background: rgba(255, 215, 0, 0.15);
+  color: var(--gold-light);
+}
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+/* Primary Rocket Launcher Button */
+.control-btn.primary {
+  background: linear-gradient(135deg, #ffd700 0%, #ff9100 100%);
+  color: #120524;
+  font-weight: 700;
+  box-shadow: 0 0 18px rgba(255, 180, 0, 0.5);
+}
+.control-btn.primary:hover {
+  background: linear-gradient(135deg, #fff3a8 0%, #ffa000 100%);
+  box-shadow: 0 0 25px rgba(255, 180, 0, 0.7);
+}
+
+.icon-btn {
+  padding: 10px;
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   Personalization / Share Modal
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 2, 12, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-box {
+  background: rgba(26, 12, 50, 0.95);
+  border: 1.5px solid var(--gold-primary);
+  border-radius: 24px;
+  max-width: 440px;
+  width: 100%;
+  padding: 28px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.3);
+  text-align: center;
+  transform: scale(0.92);
+  transition: transform 0.3s var(--transition-smooth);
+}
+
+.modal-backdrop.open .modal-box {
+  transform: scale(1);
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
+  color: var(--gold-primary);
+  margin-bottom: 8px;
+}
+
+.modal-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.name-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.name-input-group label {
+  font-size: 0.82rem;
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
+}
+
+.name-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.name-input:focus {
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #ffffff;
+  border: none;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.btn-whatsapp:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+.btn-whatsapp:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ffd700, #ff9100);
+  color: #100424;
+  border: none;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 15px rgba(255, 180, 0, 0.4);
+}
+
+.toast-notification {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  background: linear-gradient(135deg, #2e1053, #1a0833);
+  border: 1px solid var(--gold-primary);
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 30px;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6), 0 0 20px rgba(255, 215, 0, 0.3);
+  z-index: 200;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+.toast-notification.active {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ==========================================================================
+   Responsive Adaptations (Phone & Laptop)
+   ========================================================================== */
+
+/* Mobile Phones (under 600px width) */
+@media (max-width: 600px) {
+  .app-container {
+    padding: 12px 12px 82px 12px;
+  }
+
+  .surprise-button {
+    padding: 24px 18px 20px 18px;
+    width: min(92vw, 360px);
+  }
+
+  .pulse-rings {
+    width: 250px;
+    height: 250px;
+  }
+
+  .surprise-headline {
+    font-size: 1.15rem;
+  }
+
+  .greeting-card {
+    padding: 22px 14px;
+    border-radius: 20px;
+    max-width: 96vw;
+  }
+
+  .diwali-title {
+    font-size: clamp(2rem, 9vw, 2.8rem);
+  }
+
+  .wishes-text {
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .celebration-stage {
+    width: 100%;
+  }
+
+  .bottom-controls {
+    padding: 6px 10px;
+    gap: 6px;
+    width: calc(100% - 24px);
+    max-width: 360px;
+    justify-content: space-between;
+  }
+
+  .control-btn {
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    gap: 5px;
+  }
+
+  .control-btn span.btn-label-desktop {
+    display: none;
+  }
+
+  .kandil {
+    width: 36px;
+    height: 62px;
+  }
+
+  .diyas-row {
+    max-width: 300px;
+  }
+}
+
+/* Laptops / Desktops (above 900px width) */
+@media (min-width: 900px) {
+  .greeting-card {
+    padding: 34px 46px 28px 46px;
+  }
+
+  .bottom-controls {
+    gap: 14px;
+    padding: 10px 20px;
+    bottom: 22px;
+  }
+
+  .control-btn {
+    padding: 11px 20px;
+    font-size: 0.92rem;
+  }
+}
+
+/* Accessibility: Prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .ring,
+  .kandil,
+  .surprise-button,
+  .rangoli-watermark,
+  .diwali-title {
+    animation: none !important;
+  }
+
+  .flame {
+    animation-duration: 4s;
+  }
+}

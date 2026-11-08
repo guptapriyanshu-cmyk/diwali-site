@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#080314">
+  <meta name="description" content="An interactive Diwali celebration with authentic skyshot fireworks, glowing diyas, and festive surprises for phone and laptop.">
+  <meta property="og:title" content="Happy Diwali! ✨ Experience a Special Diwali Surprise">
+  <meta property="og:description" content="Tap to launch celebratory skyshots and unveil an auspicious Happy Diwali celebration!">
+  <meta property="og:type" content="website">
+
+  <title>Happy Diwali ✨ | Diwali Surprise Celebration</title>
+
+  <!-- Google Fonts: Cinzel Decorative, Poppins, Great Vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Background Twinkling Stars -->
+  <div class="star-layer" aria-hidden="true"></div>
+
+  <!-- Fullscreen Interactive Canvas for Fireworks & Skyshots -->
+  <canvas id="fireworksCanvas" aria-label="Night sky with celebratory Diwali fireworks"></canvas>
+
+  <!-- Sky Flash Effect on Detonation -->
+  <div class="sky-flash" id="skyFlash" aria-hidden="true"></div>
+
+  <!-- Hanging Decorative Kandils (Traditional Diwali Lanterns) -->
+  <header class="festive-garland" aria-hidden="true">
+    <svg class="kandil left" viewBox="0 0 60 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="0" x2="30" y2="25" stroke="#ffd700" stroke-width="1.5" />
+      <polygon points="30,25 48,45 30,65 12,45" fill="url(#kandilGrad1)" stroke="#ffe082" stroke-width="1.5" />
+      <polygon points="30,32 40,45 30,58 20,45" fill="#ff5722" />
+      <circle cx="30" cy="45" r="4" fill="#fff" />
+      <line x1="18" y1="65" x2="15" y2="92" stroke="#ffb300" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="24" y1="65" x2="23" y2="96" stroke="#ff3d00" stroke-width="1.5" />
+      <line x1="30" y1="65" x2="30" y2="100" stroke="#ffd700" stroke-width="2" />
+      <line x1="36" y1="65" x2="37" y2="96" stroke="#ff3d00" stroke-width="1.5" />
+      <line x1="42" y1="65" x2="45" y2="92" stroke="#ffb300" stroke-width="1.5" stroke-dasharray="2 2" />
+      <defs>
+        <linearGradient id="kandilGrad1" x1="12" y1="25" x2="48" y2="65" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#ff9100" />
+          <stop offset="0.5" stop-color="#ffd700" />
+          <stop offset="1" stop-color="#d50000" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <svg class="kandil right" viewBox="0 0 60 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="30" y1="0" x2="30" y2="25" stroke="#ffd700" stroke-width="1.5" />
+      <polygon points="30,25 48,45 30,65 12,45" fill="url(#kandilGrad2)" stroke="#ffe082" stroke-width="1.5" />
+      <polygon points="30,32 40,45 30,58 20,45" fill="#7b1fa2" />
+      <circle cx="30" cy="45" r="4" fill="#fff" />
+      <line x1="18" y1="65" x2="15" y2="92" stroke="#ffb300" stroke-width="1.5" stroke-dasharray="2 2" />
+      <line x1="24" y1="65" x2="23" y2="96" stroke="#d500f9" stroke-width="1.5" />
+      <line x1="30" y1="65" x2="30" y2="100" stroke="#ffd700" stroke-width="2" />
+      <line x1="36" y1="65" x2="37" y2="96" stroke="#d500f9" stroke-width="1.5" />
+      <line x1="42" y1="65" x2="45" y2="92" stroke="#ffb300" stroke-width="1.5" stroke-dasharray="2 2" />
+      <defs>
+        <linearGradient id="kandilGrad2" x1="12" y1="25" x2="48" y2="65" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#d500f9" />
+          <stop offset="0.5" stop-color="#ffd700" />
+          <stop offset="1" stop-color="#ff3d00" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </header>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- View 1: Initial Surprise Prompt -->
+    <section class="surprise-stage" id="surpriseStage" aria-label="Diwali surprise entrance">
+      <div class="pulse-rings" aria-hidden="true">
+        <div class="ring"></div>
+        <div class="ring"></div>
+        <div class="ring"></div>
+      </div>
+
+      <button class="surprise-button" id="surpriseBtn" type="button" aria-label="Click on me for Diwali surprise">
+        <!-- Centerpiece Diya with flickering flame -->
+        <div class="diya-container" aria-hidden="true">
+          <div class="diya-flame-wrapper">
+            <div class="flame-glow"></div>
+            <div class="flame"></div>
+          </div>
+          <!-- Golden Diya Brass Bowl SVG -->
+          <svg class="diya-base-svg" viewBox="0 0 100 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 25 C10 45, 25 55, 50 55 C75 55, 90 45, 90 25 C75 29, 62 25, 50 25 C38 25, 25 29, 10 25 Z" fill="url(#brassGrad)" />
+            <path d="M10 25 C25 29, 38 25, 50 25 C62 25, 75 29, 90 25 C80 20, 65 18, 50 18 C35 18, 20 20, 10 25 Z" fill="url(#brassRimGrad)" />
+            <ellipse cx="50" cy="23" rx="32" ry="4.5" fill="#4a1500" />
+            <ellipse cx="50" cy="22" rx="28" ry="3.5" fill="url(#oilGrad)" />
+            <ellipse cx="50" cy="54" rx="16" ry="3" fill="#8d6e63" opacity="0.6" />
+            <defs>
+              <linearGradient id="brassGrad" x1="10" y1="25" x2="90" y2="55" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ffb300" />
+                <stop offset="0.3" stop-color="#ffe082" />
+                <stop offset="0.7" stop-color="#ff8f00" />
+                <stop offset="1" stop-color="#795548" />
+              </linearGradient>
+              <linearGradient id="brassRimGrad" x1="10" y1="18" x2="90" y2="25" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#fff8e1" />
+                <stop offset="0.5" stop-color="#ffd54f" />
+                <stop offset="1" stop-color="#ff8f00" />
+              </linearGradient>
+              <linearGradient id="oilGrad" x1="22" y1="22" x2="78" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#ff6f00" />
+                <stop offset="0.5" stop-color="#ffb300" />
+                <stop offset="1" stop-color="#bf360c" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+
+        <!-- Call to Action Text -->
+        <div class="surprise-text-wrapper">
+          <h1 class="surprise-headline">
+            <span class="sparkle-icon">✨</span>
+            <span>Click on me for Diwali surprise</span>
+            <span class="sparkle-icon">✨</span>
+          </h1>
+          <p class="surprise-subtext">Tap to illuminate the sky & celebrate</p>
+        </div>
+      </button>
+    </section>
+
+    <!-- View 2: Revealed Happy Diwali Celebration Card -->
+    <section class="celebration-stage hidden" id="celebrationStage" aria-live="polite">
+      <div class="greeting-card">
+        <!-- Rangoli Decorative Watermark -->
+        <svg class="rangoli-watermark" viewBox="0 0 200 200" fill="none" stroke="#ffd700" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="90" stroke-dasharray="4 4" />
+          <circle cx="100" cy="100" r="70" />
+          <circle cx="100" cy="100" r="45" stroke-dasharray="2 2" />
+          <circle cx="100" cy="100" r="25" />
+          <path d="M100 10 L100 190 M10 100 L190 100 M36 36 L164 164 M36 164 L164 36" />
+          <polygon points="100,30 115,70 155,70 125,95 135,135 100,110 65,135 75,95 45,70 85,70" />
+        </svg>
+
+        <div class="card-content">
+          <!-- Festive Top Badge -->
+          <div class="festive-badge">
+            <span>🪔</span>
+            <span>Festival of Lights</span>
+            <span>🪔</span>
+          </div>
+
+          <!-- Recipient Greeting if personalized -->
+          <div class="recipient-greeting" id="recipientGreeting"></div>
+
+          <!-- Grand Shimmering Happy Diwali Title -->
+          <h2 class="diwali-title">Happy Diwali</h2>
+
+          <!-- Ornate Divider -->
+          <div class="ornate-divider" aria-hidden="true">
+            <div class="divider-line"></div>
+            <span class="divider-symbol">✨ 🪔 ✨</span>
+            <div class="divider-line"></div>
+          </div>
+
+          <!-- Heartfelt Auspicious Message -->
+          <p class="wishes-text">
+            May the divine light of Diwali illuminate your journey with <strong>abundant peace, prosperity, vibrant health,</strong> and boundless joy.
+            May this sacred festival bring warmth to your home and ignite new beginnings filled with success and happiness!
+          </p>
+
+          <!-- Flanking Traditional Diyas (Interactive) -->
+          <div class="diyas-row">
+            <div class="side-diya" title="Click to launch a firework!">
+              <div class="diya-flame-wrapper">
+                <div class="flame-glow"></div>
+                <div class="flame"></div>
+              </div>
+              <svg class="diya-base-svg" style="width: 60px; height: 35px;" viewBox="0 0 100 60">
+                <path d="M10 25 C10 45, 25 55, 50 55 C75 55, 90 45, 90 25 C75 29, 62 25, 50 25 C38 25, 25 29, 10 25 Z" fill="url(#brassGrad)" />
+                <path d="M10 25 C25 29, 38 25, 50 25 C62 25, 75 29, 90 25 C80 20, 65 18, 50 18 C35 18, 20 20, 10 25 Z" fill="url(#brassRimGrad)" />
+                <ellipse cx="50" cy="23" rx="30" ry="4" fill="url(#oilGrad)" />
+              </svg>
+              <span class="diya-caption">Shubh Deepavali</span>
+            </div>
+
+            <div class="side-diya" title="Click to launch a firework!">
+              <div class="diya-flame-wrapper">
+                <div class="flame-glow"></div>
+                <div class="flame"></div>
+              </div>
+              <svg class="diya-base-svg" style="width: 60px; height: 35px;" viewBox="0 0 100 60">
+                <path d="M10 25 C10 45, 25 55, 50 55 C75 55, 90 45, 90 25 C75 29, 62 25, 50 25 C38 25, 25 29, 10 25 Z" fill="url(#brassGrad)" />
+                <path d="M10 25 C25 29, 38 25, 50 25 C62 25, 75 29, 90 25 C80 20, 65 18, 50 18 C35 18, 20 20, 10 25 Z" fill="url(#brassRimGrad)" />
+                <ellipse cx="50" cy="23" rx="30" ry="4" fill="url(#oilGrad)" />
+              </svg>
+              <span class="diya-caption">Joy & Prosperity</span>
+            </div>
+          </div>
+
+          <!-- Tap sky hint -->
+          <div class="tap-sky-hint">
+            <span>🎆 Tap or click anywhere in the sky to launch more skyshots!</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Floating Interactive Controls (Phone & Laptop) -->
+  <nav class="bottom-controls" id="bottomControls" aria-label="Celebration controls">
+    <!-- Primary Rocket Launcher Button -->
+    <button class="control-btn primary" id="launchSkyshotBtn" type="button" aria-label="Launch Firework Skyshot">
+      <span>🚀</span>
+      <span>Launch Skyshot</span>
+    </button>
+
+    <!-- Anar Fountain Firecracker Button -->
+    <button class="control-btn" id="launchAnarBtn" type="button" aria-label="Light Anar Fountain" title="Light Anar Fountain">
+      <span>🌸</span>
+      <span class="btn-label-desktop">Anar</span>
+    </button>
+
+    <!-- Chakri Ground Spinner Button -->
+    <button class="control-btn" id="launchChakriBtn" type="button" aria-label="Light Chakri Spinner" title="Light Chakri Spinner">
+      <span>🌀</span>
+      <span class="btn-label-desktop">Chakri</span>
+    </button>
+
+    <!-- Personalize / Share Button -->
+    <button class="control-btn" id="shareBtn" type="button" aria-label="Personalize and Share Wish">
+      <span>✍️</span>
+      <span class="btn-label-desktop">Personalize</span>
+    </button>
+
+    <!-- Mute / Unmute Button -->
+    <button class="control-btn icon-btn" id="soundToggleBtn" type="button" aria-label="Toggle Sound" title="Sound Mute / Unmute">
+      <span id="soundIcon">🔊</span>
+    </button>
+
+    <!-- Fullscreen Toggle Button -->
+    <button class="control-btn icon-btn" id="fullscreenBtn" type="button" aria-label="Toggle Fullscreen" title="Toggle Fullscreen">
+      <span id="fullscreenIcon">⛶</span>
+    </button>
+
+    <!-- Replay Surprise Button -->
+    <button class="control-btn" id="replayBtn" type="button" aria-label="Replay Diwali Surprise" title="Replay the opening surprise">
+      <span>🔄</span>
+      <span class="btn-label-desktop">Replay</span>
+    </button>
+  </nav>
+
+  <!-- Personalize Wish Modal -->
+  <div class="modal-backdrop" id="personalizeModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <h3 class="modal-title" id="modalTitle">✨ Personalize Diwali Wish ✨</h3>
+      <p class="modal-desc">Enter your name or your loved one's name to generate a custom greeting link you can share on WhatsApp or social media!</p>
+
+      <form id="personalizeForm">
+        <div class="name-input-group">
+          <label for="recipientNameInput">Recipient / Family Name:</label>
+          <input type="text" id="recipientNameInput" class="name-input" placeholder="e.g. Satyam, Sharma Family..." maxlength="40" autocomplete="off" required>
+        </div>
+
+        <div class="modal-buttons">
+          <button type="button" class="btn-secondary" id="closeModalBtn">Cancel</button>
+          <button type="button" class="btn-whatsapp" id="whatsappShareBtn" title="Share via WhatsApp">
+            <span>📲 WhatsApp</span>
+          </button>
+          <button type="submit" class="btn-primary">Apply & Copy</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-notification" id="toastNotification" role="alert" aria-live="assertive"></div>
+
+  <!-- Core Scripts -->
+  <script src="audio.js"></script>
+  <script src="fireworks.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
